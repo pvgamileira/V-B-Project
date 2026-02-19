@@ -6,9 +6,9 @@ import { Product, CartItem, Category } from './types';
 
 // Ícone do WhatsApp (SVG Oficial)
 const WhatsAppIcon = ({ className }: { className?: string }) => (
-  <svg 
-    viewBox="0 0 24 24" 
-    fill="currentColor" 
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
     className={className}
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -21,7 +21,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 // ==========================================
 export default function App() {
   // --- ESTADOS (Hooks) ---
-  
+
   // Estado para armazenar os itens do carrinho
   const [cart, setCart] = useState<CartItem[]>([]);
 
@@ -35,8 +35,8 @@ export default function App() {
   const [themeColor, setThemeColor] = useState<'rose' | 'blue'>('rose');
 
   // Constante do Telefone
-  const PHONE_NUMBER = "5511947418955";
-  const DISPLAY_PHONE = "(11) 94741-8955";
+  const PHONE_NUMBER = "5511911221921";
+  const DISPLAY_PHONE = "(11) 91122-1921";
 
   // --- EFEITOS (useEffect) ---
 
@@ -55,7 +55,7 @@ export default function App() {
   const filteredProducts = products.filter(product => {
     if (selectedCategory === "Todos") return true;
     if (selectedCategory === "Feminino") {
-       return product.category !== "Masculino";
+      return product.category !== "Masculino";
     }
     return product.category === selectedCategory;
   });
@@ -65,9 +65,9 @@ export default function App() {
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === product.id);
       if (existingItem) {
-        return prevCart.map(item => 
-          item.id === product.id 
-            ? { ...item, quantity: item.quantity + 1 } 
+        return prevCart.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
@@ -100,17 +100,17 @@ export default function App() {
   // Gera a mensagem e o link para o WhatsApp
   const handleCheckout = () => {
     let message = "*Olá! Gostaria de finalizar meu pedido na V&B Accessories:*\n\n";
-    
+
     cart.forEach(item => {
       message += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2)}\n`;
     });
-    
+
     message += `\n*Total: R$ ${cartTotal.toFixed(2)}*`;
     message += "\n\nAguardo confirmação!";
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodedMessage}`;
-    
+
     window.open(whatsappUrl, '_blank');
   };
 
@@ -131,16 +131,16 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-slate-800 font-sans selection:bg-rose-100">
-      
+
       {/* --- HEADER --- */}
       <header className="sticky top-0 z-40 w-full bg-[#FDFBF7]/90 backdrop-blur-md border-b border-stone-100 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between relative">
-          
+
           {/* Lado Esquerdo - Menu Mobile (Placeholder) */}
           <div className="flex-1 flex justify-start">
-             <button className="p-2 hover:bg-stone-100 rounded-full lg:hidden">
-               <Menu className="w-6 h-6 text-slate-600" />
-             </button>
+            <button className="p-2 hover:bg-stone-100 rounded-full lg:hidden">
+              <Menu className="w-6 h-6 text-slate-600" />
+            </button>
           </div>
 
           {/* Logo / Nome da Marca (Centralizado) */}
@@ -160,7 +160,7 @@ export default function App() {
 
           {/* Ações do Header (Lado Direito) */}
           <div className="flex-1 flex justify-end items-center gap-4">
-            <button 
+            <button
               onClick={() => setIsCartOpen(true)}
               className="relative p-2 hover:bg-stone-100 rounded-full transition-colors group"
               aria-label="Abrir carrinho"
@@ -179,14 +179,14 @@ export default function App() {
       {/* --- HERO BANNER --- */}
       <section className="relative w-full h-[500px] bg-stone-900 overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 opacity-70">
-          <img 
-            src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=1920" 
-            alt="Banner Joias" 
+          <img
+            src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&q=80&w=1920"
+            alt="Banner Joias"
             className="w-full h-full object-cover"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-transparent" />
-        
+
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -197,13 +197,13 @@ export default function App() {
               Nova Coleção 2024
             </span>
             <h2 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-tight tracking-tight">
-              Elegância que <br/> <span className="italic font-light">transcende</span> o tempo.
+              Elegância que <br /> <span className="italic font-light">transcende</span> o tempo.
             </h2>
             <p className="text-stone-200 text-lg md:text-xl mb-10 max-w-xl mx-auto font-light leading-relaxed">
-              Descubra nossa seleção exclusiva de joias em Prata 925. 
+              Descubra nossa seleção exclusiva de joias em Prata 925.
               Peças desenhadas para contar a sua história.
             </p>
-            <button 
+            <button
               onClick={() => document.getElementById('vitrine')?.scrollIntoView({ behavior: 'smooth' })}
               className={`px-8 py-4 bg-white text-slate-900 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-stone-100 transition-all transform hover:scale-105 shadow-xl`}
             >
@@ -223,8 +223,8 @@ export default function App() {
                 onClick={() => setSelectedCategory(cat as Category)}
                 className={`
                   px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border
-                  ${selectedCategory === cat 
-                    ? `${themeClasses.primary} border-transparent text-white shadow-md transform scale-105` 
+                  ${selectedCategory === cat
+                    ? `${themeClasses.primary} border-transparent text-white shadow-md transform scale-105`
                     : 'bg-white border-stone-200 text-stone-600 hover:border-stone-400 hover:bg-stone-50'}
                 `}
               >
@@ -237,7 +237,7 @@ export default function App() {
 
       {/* --- VITRINE DE PRODUTOS --- */}
       <main id="vitrine" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        
+
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
           <div>
             <h3 className="text-3xl font-serif text-slate-800 mb-2">
@@ -253,18 +253,18 @@ export default function App() {
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredProducts.map((product) => (
-              <motion.div 
+              <motion.div
                 layout
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                key={product.id} 
+                key={product.id}
                 className="group bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
               >
                 {/* Imagem do Card */}
                 <div className="relative aspect-[4/5] overflow-hidden bg-stone-100">
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
+                  <img
+                    src={product.image}
+                    alt={product.name}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                     loading="lazy"
                   />
@@ -275,7 +275,7 @@ export default function App() {
                   )}
                   {/* Overlay ao passar o mouse */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                  
+
                   {/* Botão Rápido (Aparece no Hover) */}
                   <div className="absolute bottom-4 left-0 right-0 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">
                     <button
@@ -307,7 +307,7 @@ export default function App() {
         ) : (
           <div className="text-center py-20 bg-stone-50 rounded-3xl">
             <p className="text-stone-500 text-lg mb-4">Nenhum produto encontrado nesta categoria.</p>
-            <button 
+            <button
               onClick={() => setSelectedCategory("Todos")}
               className={`text-sm font-bold uppercase tracking-wider ${themeClasses.text} hover:underline`}
             >
@@ -326,7 +326,7 @@ export default function App() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-5xl font-serif mb-6">Atendimento Personalizado</h2>
           <p className="text-stone-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Tem dúvidas sobre alguma peça ou precisa de ajuda para escolher o presente perfeito? 
+            Tem dúvidas sobre alguma peça ou precisa de ajuda para escolher o presente perfeito?
             Nossa equipe de especialistas está pronta para te atender via WhatsApp.
           </p>
           <button
@@ -344,7 +344,7 @@ export default function App() {
         {isCartOpen && (
           <>
             {/* Backdrop Escuro */}
-            <motion.div 
+            <motion.div
               key="backdrop"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -352,9 +352,9 @@ export default function App() {
               onClick={() => setIsCartOpen(false)}
               className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50"
             />
-            
+
             {/* Painel do Carrinho */}
-            <motion.div 
+            <motion.div
               key="cart-panel"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -365,7 +365,7 @@ export default function App() {
               {/* Cabeçalho do Carrinho */}
               <div className="p-6 border-b border-stone-100 flex items-center justify-between bg-[#FDFBF7]">
                 <h2 className="text-xl font-bold text-slate-800 font-serif">Seu Carrinho</h2>
-                <button 
+                <button
                   onClick={() => setIsCartOpen(false)}
                   className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-500"
                 >
@@ -379,7 +379,7 @@ export default function App() {
                   <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
                     <ShoppingBag size={48} className="text-stone-300" />
                     <p className="text-stone-500">Seu carrinho está vazio.</p>
-                    <button 
+                    <button
                       onClick={() => setIsCartOpen(false)}
                       className={`px-6 py-2 rounded-full border ${themeClasses.border} ${themeClasses.text} font-medium hover:bg-stone-50 transition-colors`}
                     >
@@ -399,7 +399,7 @@ export default function App() {
                         </div>
                         <div className="flex items-center justify-between mt-2">
                           <div className="flex items-center gap-3 bg-stone-50 rounded-full px-3 py-1 border border-stone-100">
-                            <button 
+                            <button
                               onClick={() => updateQuantity(item.id, -1)}
                               className="text-stone-400 hover:text-stone-600 disabled:opacity-50"
                               disabled={item.quantity <= 1}
@@ -407,7 +407,7 @@ export default function App() {
                               <Minus size={14} />
                             </button>
                             <span className="text-sm font-medium w-4 text-center">{item.quantity}</span>
-                            <button 
+                            <button
                               onClick={() => updateQuantity(item.id, 1)}
                               className="text-stone-400 hover:text-stone-600"
                             >
@@ -418,7 +418,7 @@ export default function App() {
                             <span className="font-bold text-slate-800">
                               R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}
                             </span>
-                            <button 
+                            <button
                               onClick={() => removeFromCart(item.id)}
                               className="text-stone-400 hover:text-red-500 transition-colors"
                               title="Remover item"
@@ -474,11 +474,11 @@ export default function App() {
       <footer className="bg-white border-t border-stone-100 pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            
+
             {/* Coluna 1: Marca */}
             <div className="text-center md:text-left">
               <div className="inline-block mb-6">
-                 <div className="flex flex-col items-center md:items-start">
+                <div className="flex flex-col items-center md:items-start">
                   <h2 className="font-serif text-3xl font-bold text-slate-900 leading-none">V&B</h2>
                   <span className="text-[0.5rem] tracking-[0.3em] uppercase mt-1 font-sans text-slate-500">Accessories</span>
                 </div>
