@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, X, MessageCircle, Menu, Trash2, Plus, Minus, Search, Instagram, Facebook, Phone } from 'lucide-react';
+import { ShoppingBag, X, MessageCircle, Menu, Trash2, Plus, Minus, Search, Instagram, Phone } from 'lucide-react';
+
 import { motion, AnimatePresence } from 'motion/react';
 import { products, categories } from './data/mockData';
 import { Product, CartItem, Category } from './types';
@@ -27,6 +28,7 @@ export default function App() {
 
   // Estado para controlar a visibilidade do carrinho
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Estado para a categoria selecionada no filtro
   const [selectedCategory, setSelectedCategory] = useState<Category>("Todos");
@@ -136,9 +138,12 @@ export default function App() {
       <header className="sticky top-0 z-40 w-full bg-[#FDFBF7]/90 backdrop-blur-md border-b border-stone-100 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between relative">
 
-          {/* Lado Esquerdo - Menu Mobile (Placeholder) */}
+          {/* Lado Esquerdo - Menu Mobile */}
           <div className="flex-1 flex justify-start">
-            <button className="p-2 hover:bg-stone-100 rounded-full lg:hidden">
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="p-2 hover:bg-stone-100 rounded-full lg:hidden"
+            >
               <Menu className="w-6 h-6 text-slate-600" />
             </button>
           </div>
@@ -194,7 +199,7 @@ export default function App() {
             transition={{ duration: 0.8 }}
           >
             <span className={`inline-block py-1.5 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold tracking-[0.2em] uppercase mb-6`}>
-              Nova Coleção 2024
+              Nova Coleção 2026
             </span>
             <h2 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-tight tracking-tight">
               Elegância que <br /> <span className="italic font-light">transcende</span> o tempo.
@@ -203,12 +208,22 @@ export default function App() {
               Descubra nossa seleção exclusiva de joias em Prata 925.
               Peças desenhadas para contar a sua história.
             </p>
-            <button
-              onClick={() => document.getElementById('vitrine')?.scrollIntoView({ behavior: 'smooth' })}
-              className={`px-8 py-4 bg-white text-slate-900 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-stone-100 transition-all transform hover:scale-105 shadow-xl`}
-            >
-              Ver Coleção
-            </button>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={() => document.getElementById('vitrine')?.scrollIntoView({ behavior: 'smooth' })}
+                className={`px-8 py-4 bg-white text-slate-900 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-stone-100 transition-all transform hover:scale-105 shadow-xl`}
+              >
+                Ver Coleção
+              </button>
+              <a
+                href="https://www.instagram.com/vebaccessories/"
+                target="_blank"
+                className="px-8 py-4 bg-transparent border border-gray-200/30 text-white rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white/10 hover:border-white transition-all flex items-center gap-2"
+              >
+                <Instagram size={18} />
+                Siga nosso Instagram
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -459,6 +474,86 @@ export default function App() {
         )}
       </AnimatePresence>
 
+      {/* --- MENU MOBILE (DRAWER) --- */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            <motion.div
+              key="menu-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMenuOpen(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 lg:hidden"
+            />
+            <motion.div
+              key="menu-panel"
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 left-0 h-full w-full max-w-xs bg-[#FDFBF7] shadow-2xl z-50 flex flex-col lg:hidden"
+            >
+              <div className="p-6 border-b border-stone-100 flex items-center justify-between">
+                <div className="flex flex-col">
+                  <h2 className="font-serif text-2xl font-bold text-slate-900">V&B</h2>
+                  <span className="text-[0.5rem] tracking-[0.3em] uppercase text-stone-500">Accessories</span>
+                </div>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 hover:bg-stone-100 rounded-full transition-colors text-stone-500"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-6">
+                {/* Navegação Principal */}
+                <div className="mb-8">
+                  <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4">Navegação Principal</h3>
+                  <nav className="flex flex-col space-y-2">
+                    <button
+                      onClick={() => { setIsMenuOpen(false); setSelectedCategory("Todos"); }}
+                      className="text-left py-2 text-slate-800 font-medium hover:text-rose-500 transition-colors"
+                    >
+                      Início
+                    </button>
+                    <button
+                      onClick={() => { setIsMenuOpen(false); setSelectedCategory("Lançamentos" as Category); }}
+                      className="text-left py-2 text-slate-800 font-medium hover:text-rose-500 transition-colors"
+                    >
+                      Lançamentos
+                    </button>
+                    <button
+                      onClick={() => { setIsMenuOpen(false); setSelectedCategory("Mais Vendidos" as Category); }}
+                      className="text-left py-2 text-slate-800 font-medium hover:text-rose-500 transition-colors"
+                    >
+                      Mais Vendidos
+                    </button>
+                  </nav>
+                </div>
+
+                {/* Categorias */}
+                <div>
+                  <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4">Categorias</h3>
+                  <nav className="flex flex-col space-y-2">
+                    {categories.map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => { setIsMenuOpen(false); setSelectedCategory(cat as Category); }}
+                        className={`text-left py-2 transition-colors ${selectedCategory === cat ? 'text-rose-500 font-bold' : 'text-slate-600 hover:text-rose-500'}`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* --- BOTÃO FLUTUANTE WHATSAPP --- */}
       <a
         href={`https://wa.me/${PHONE_NUMBER}`}
@@ -510,9 +605,6 @@ export default function App() {
                 <div className="flex items-center gap-4 mt-4">
                   <a href="#" className="p-2 bg-stone-100 rounded-full hover:bg-rose-100 hover:text-rose-500 transition-colors">
                     <Instagram size={20} />
-                  </a>
-                  <a href="#" className="p-2 bg-stone-100 rounded-full hover:bg-blue-100 hover:text-blue-600 transition-colors">
-                    <Facebook size={20} />
                   </a>
                 </div>
               </div>
